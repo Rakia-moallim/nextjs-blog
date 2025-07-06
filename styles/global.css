@@ -50,6 +50,10 @@ a{
 }
 
 img{
-  mix-width: 100%;
+  max-width: 100%;
   display: block;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -4,7 +4,19 @@ import Link from 'next/link'
 import Image from 'next/image';
 import Layout, {siteTitle} from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
-export default function Home() {
+import {getSortedPostsData} from '../lib/posts';
+
+export async function getStaticProps(){
+  const allPostData =getSortedPostsData();
+  return{
+    props: {
+      allPostData,
+    },
+  };
+}
+
+
+export default function Home({ allPostData }) {
 
   // return (
   //   <div className={styles.container}>
@@ -150,13 +162,29 @@ export default function Home() {
        <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-       <p>HI! I'm WC, I'm content creator and Software engneer contact me on Tiwitter</p>
+       <p>HI! I'm Mimi, I'm content creator and Software engneer contact me on <a  href='#'>Tiwitter</a></p>
        <p>
         THis is simple website, you'll be buliding a site like this on {''}
         <a href='https://nextjs.org/learn'>our Next.js tutorial</a>
         </p>
       </section>
+
+       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+         <h2 className={utilStyles.headingLg}>Blog</h2>
+         <ul className={utilStyles.list}>
+          {allPostData.map(({id, date, title}) => (
+          <li className={utilStyles.listItems} key={id }>
+            {title}
+            <br/>
+            {id}
+            <br/>
+            {date}
+          </li>
+          ))}
+         </ul>
+       </section>
     </Layout>
+
   );
 
 }
